@@ -3,7 +3,7 @@ version: '3.7'
 services:
   db:
     container_name: "test_db"
-    
+    image: mysql:latest  # Cambia "mysql:latest" por la imagen que deseas usar
     build:
       context: .
       dockerfile: db.dockerfile
@@ -17,11 +17,10 @@ services:
       MYSQL_DATABASE: "golangdb"
       MYSQL_USER: "luis"
       MYSQL_PASSWORD: "2171906"
-      
     volumes:
       - mysql_data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
-    
+
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin:5.1.1
@@ -35,9 +34,9 @@ services:
       - db
     links:
       - db
+
   api:
     container_name:  "test_api"
-    #image: christianphp/golang-api-restful:1.0.5
     build:
       context: .
       dockerfile: Dockerfile
@@ -50,5 +49,6 @@ services:
 
 networks:
   default:
+
 volumes:
   mysql_data:
