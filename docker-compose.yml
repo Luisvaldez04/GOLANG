@@ -35,6 +35,7 @@ services:
       - db
     links:
       - db
+      
   api:
     container_name:  "test_api"
     #image: christianphp/golang-api-restful:1.0.5
@@ -50,7 +51,8 @@ services:
 
 networks:
   default:
-volumes:
 
+volumes:
+  mysql_data:
 
 
