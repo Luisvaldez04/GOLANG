@@ -4,11 +4,11 @@
     - name: Clonar repositorio
       git:
         repo: https://github.com/Luisvaldez04/GOLANG-APP-
-        dest: /home/luisvaldez04/GOLANG-APP
+        dest: /home/luisvaldez04/GOLANG-APP-
 
     - name: Build and Start Docker container
       shell: |
-        cd /home/luisvaldez04/GOLANG-APP
+        cd /home/luisvaldez04/GOLANG-APP-
         docker-compose down
         docker-compose build
         docker-compose up -d
