@@ -36,7 +36,7 @@ services:
       - db
 
   api:
-    container_name:  "test_api"
+    container_name: test_api
     build:
       context: .
       dockerfile: Dockerfile
@@ -51,4 +51,5 @@ networks:
   default:
 
 volumes:
-  mysql_data:
+  mysql_data: 
+
