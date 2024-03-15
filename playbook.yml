@@ -1,14 +1,29 @@
-- name: Administrar servidores en DigitalOcean
+---
+- name: Deploy and run Golang application with Docker
   hosts: all
   tasks:
-    - name: Clonar repositorio
+    - name: Clone GitHub repository
       git:
-        repo: https://github.com/Luisvaldez04/GOLANG-APP-
-        dest: /home/luisvaldez04/GOLANG-APP-
+        repo: https://github.com/Luisvaldez04/GOLANG-APP-.git
+        dest: /home/luisvaldez04/GOLANG-APP
+        force: yes  # Esto forzará la actualización del repositorio incluso si ya existe en el destino.
 
-    - name: Build and Start Docker container
+    - name: Set up Docker Compose
+      block:
+        - name: Install Docker
+          apt:
+            name: docker.io
+            state: present  # Asegura que Docker esté instalado
+
+        - name: Install Docker Compose
+          pip:
+            name: docker-compose
+            state: present  # Asegura que Docker Compose esté instalado
+      become: yes  # Necesario para instalar paquetes en el sistema
+
+    - name: Build and start Docker containers
       shell: |
-        cd /home/luisvaldez04/GOLANG-APP-
+        cd /home/luisvaldez04/GOLANG-APP
         docker-compose down
         docker-compose build
         docker-compose up -d
