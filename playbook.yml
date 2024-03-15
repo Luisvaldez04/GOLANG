@@ -1,7 +1,7 @@
 ---
 - name: Deploy and run Golang application with Docker
   hosts: all
-  become: true
+  become: yes
   tasks:
     - name: Clone GitHub repository
       git:
