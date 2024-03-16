@@ -8,14 +8,14 @@ RUN apk update && \
     apk add make
 
 # prevent the re-installation of vendors at every change in the source code
-#COPY ./go.mod go.sum ./
-#RUN go mod download && go mod verify 
+# COPY ./go.mod go.sum ./
+# RUN go mod download && go mod verify 
 # Install Compile Daemon for go. We'll use it to watch changes in go files
 RUN go get github.com/githubnemo/CompileDaemon
 
-#Install mux from user Gorilla to can access to the http methods
-#RUN go get -u github.com/gorilla/mux
-#RUN go get -d github.com/gorilla/mux
+# Install mux from Gorilla to handle HTTP methods
+RUN go get -u github.com/gorilla/mux
+
 # Copy and build the app
 COPY . .
 COPY ./entrypoint.sh /entrypoint.sh
@@ -24,7 +24,6 @@ COPY ./entrypoint.sh /entrypoint.sh
 ADD https://raw.githubusercontent.com/eficode/wait-for/v2.1.0/wait-for /usr/local/bin/wait-for
 RUN chmod +rx /usr/local/bin/wait-for /entrypoint.sh
 
-
-
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]
+
 
