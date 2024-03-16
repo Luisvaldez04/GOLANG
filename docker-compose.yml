@@ -3,6 +3,7 @@ version: '3.7'
 services:
   db:
     container_name: "test_db"
+    
     build:
       context: .
       dockerfile: db.dockerfile
@@ -16,9 +17,11 @@ services:
       MYSQL_DATABASE: "golangdb"
       MYSQL_USER: "luis"
       MYSQL_PASSWORD: "2171906"
+      
     volumes:
       - mysql_data:/var/lib/mysql
-
+    command: --default-authentication-plugin=mysql_native_password
+    
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin:5.1.1
@@ -30,13 +33,11 @@ services:
       - PMA_PASSWORD:secret
     depends_on:
       - db
-    networks:
-      - default
     links:
       - db
-
   api:
-    container_name: "test_api"
+    container_name:  "test_api"
+    
     build:
       context: .
       dockerfile: Dockerfile
@@ -46,46 +47,8 @@ services:
       - db
     volumes:
       - .:/app/
-    networks:
-      - default
 
 networks:
   default:
-
-volumes:
-  mysql_data:
-
-    container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin:5.1.1
-    restart: 'always'
-    ports:
-      - '8087:80'
-    environment:
-      - PMA_HOST=db
-      - PMA_PASSWORD:secret
-    depends_on:
-      - db
-    networks:
-      - default
-    links:
-      - db
-
-  api:
-    container_name: "test_api"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "5001:5001"
-    depends_on:
-      - db
-    volumes:
-      - .:/app/
-    networks:
-      - default
-
-networks:
-  default:
-
 volumes:
   mysql_data:
