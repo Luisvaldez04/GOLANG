@@ -1,15 +1,25 @@
 - name: Administrar servidores en DigitalOcean
   hosts: all
-  become: yes  # Añade esta línea para ejecutar todas las tareas con privilegios de superusuario
+  become: yes
   tasks:
     - name: Clonar repositorio
       git:
         repo: https://github.com/Luisvaldez04/GOLANG-APP-
         dest: /home/luisvaldez04/GOLANG-APP-
+        
+    - name: Detener contenedores existentes
+      docker_compose:
+        project_src: /home/luisvaldez04/GOLANG-APP-
+        state: absent
+      ignore_errors: yes
 
-    - name: Build and Start Docker container
-      shell: |
-        cd /home/luisvaldez04/GOLANG-APP-
-        docker-compose down
-        docker-compose build
-        docker-compose up -d
+    - name: Construir contenedores Docker
+      docker_compose:
+        project_src: /home/luisvaldez04/GOLANG-APP-
+        build: yes
+        pull: yes
+
+    - name: Iniciar contenedores Docker
+      docker_compose:
+        project_src: /home/luisvaldez04/GOLANG-APP-
+        state: started
