@@ -1,29 +1,26 @@
 FROM golang:1.16-alpine
+
 WORKDIR /app
 
-# add some necessary packages
+# Instalación de paquetes necesarios
 RUN apk update && \
-    apk add libc-dev && \
-    apk add gcc && \
-    apk add make
+    apk add libc-dev gcc make
 
-# prevent the re-installation of vendors at every change in the source code
-# COPY ./go.mod go.sum ./
-# RUN go mod download && go mod verify 
-# Install Compile Daemon for go. We'll use it to watch changes in go files
+# Instalación de Compile Daemon para Go
 RUN go get github.com/githubnemo/CompileDaemon
 
-# Install mux from Gorilla to handle HTTP methods
+# Instalación de mux desde Gorilla para manejar métodos HTTP
 RUN go get -u github.com/gorilla/mux
 
-# Copy and build the app
+# Copia y construye la aplicación
 COPY . .
-COPY ./entrypoint.sh /entrypoint.sh
 
-# wait-for-it requires bash, which alpine doesn't ship with by default. Use wait-for instead
+# Copia del script de punto de entrada y otorga permisos de ejecución
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# wait-for requiere bash, que alpine no incluye por defecto. Usaremos wait-for en su lugar.
 ADD https://raw.githubusercontent.com/eficode/wait-for/v2.1.0/wait-for /usr/local/bin/wait-for
-RUN chmod +rx /usr/local/bin/wait-for /entrypoint.sh
+RUN chmod +x /usr/local/bin/wait-for
 
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]
-
-
