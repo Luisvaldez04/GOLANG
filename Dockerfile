@@ -1,7 +1,6 @@
-# start with base image
+# Inicia con la imagen base de MySQL
 FROM mysql:8.0.23
 
-# import data into container
-# All scripts in docker-entrypoint-initdb.d/ are automatically executed during container startup
+# Importa datos al contenedor
+# Todos los scripts en docker-entrypoint-initdb.d/ se ejecutan automáticamente durante el inicio del contenedor
 COPY ./database/*.sql /docker-entrypoint-initdb.d/
-este es db.dockeerfile 
