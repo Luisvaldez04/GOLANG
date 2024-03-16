@@ -6,7 +6,7 @@
   tasks:
     - name: clonar
       git:
-        repo: https://github.com/Luisvaldez04/GOLANG
+        repo: https://github.com/Luisvaldez04/GOLANG.git
         dest: /home/luisvaldez04/GOLANG
       register: git_clone
 
