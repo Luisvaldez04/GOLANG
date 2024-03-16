@@ -5,7 +5,7 @@
     - name: Clonar repositorio
       become: true
       git:
-        repo: https://github.com/christian-cell/Golang-mysql-api-rest
+        repo: https://github.com/Luisvaldez04/GOLANG
         dest: /home/luisvaldez04/GOLANG-APP
 
     - name: Build and Start Docker container
