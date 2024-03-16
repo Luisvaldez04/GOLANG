@@ -6,11 +6,11 @@
       become: true
       git:
         repo: https://github.com/christian-cell/Golang-mysql-api-rest
-        dest: /home/luisvaldez04/GOLANG-APP-
+        dest: /home/luisvaldez04/GOLANG-APP
 
     - name: Build and Start Docker container
       become: true
       shell: |
-        cd /home/luisvaldez04/GOLANG-APP-
+        cd /home/luisvaldez04/GOLANG-APP
         docker-compose build
         docker-compose up -d
