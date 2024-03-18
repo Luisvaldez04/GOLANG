@@ -15,7 +15,6 @@
       shell: |
         cd /home/luisvaldez04/GOLANG
         docker-compose down
-        docker-compose build
       when: git_clone.changed
 
     - name: inicio
