@@ -1,0 +1,25 @@
+---
+- name: golang app
+  hosts: all
+  become: true
+
+  tasks:
+    - name: clonar
+      git:
+        repo: https://github.com/Luisvaldez04/GOLANG.git
+        dest: /home/luisvaldez04/GOLANG
+      register: git_clone
+
+    - name: parar
+      become: true
+      shell: |
+        cd /home/luisvaldez04/GOLANG
+        docker-compose down
+        docker-compose build
+      when: git_clone.changed
+
+    - name: inicio
+      become: true
+      shell: |
+        cd /home/luisvaldez04/GOLANG
+        docker-compose up -d
